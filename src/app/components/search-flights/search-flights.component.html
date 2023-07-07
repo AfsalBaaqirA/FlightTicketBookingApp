@@ -1,0 +1,81 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="form-signin text-center custom-form" style="width: 500px; max-width: 90%;" *ngIf="!showFlights">
+        <form class="my-4">
+            <h1 class="h3 mb-4 fw-normal py-3">Flight Booking</h1>
+            <div class="row mx-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingFrom" [(ngModel)]="from" name="from">
+                            <option value="" disabled>Select an airport</option>
+                            <option *ngFor="let airport of airports" [value]="airport">{{ airport }}</option>
+                        </select>
+                        <label for="floatingFrom">From</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingTo" [(ngModel)]="to" name="to">
+                            <option value="" disabled>Select an airport</option>
+                            <option *ngFor="let airport of airports" [value]="airport">{{ airport }}</option>
+                        </select>
+                        <label for="floatingFrom">To</label>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row mx-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="date" class="form-control" id="floatingDeparture" placeholder="Departure"
+                            [(ngModel)]="departure" name="departure">
+                        <label for="floatingDeparture">Departure</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="floatingPassengers" placeholder="Passengers"
+                            [(ngModel)]="passengers" name="passengers" min="1" max="5">
+                        <label for="floatingPassengers">Passengers</label>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-primary" (click)="searchFlights()">Search</button>
+        </form>
+    </div>
+    <div class="table-container d-flex flex-column justify-content-center" *ngIf="showFlights">
+        <table class="table table-hover">
+            <caption class="text-center">Flights from {{from}} - {{to}}</caption>
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Flight Number</th>
+                    <th class="text-center">Flight Name</th>
+                    <th class="text-center">Economy</th>
+                    <th class="text-center">Business</th>
+                    <th class="text-center">First Class</th>
+                    <th class="text-center">Duration</th>
+                    <th class="text-center">Available Seats</th>
+                    <th class="text-center">Book</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tbody class="table-group-divider">
+                <tr *ngFor="let flight of flightList; let i = index">
+                    <td class="align-middle text-center">{{i + 1}}</td>
+                    <td class="align-middle text-center">{{flight.flightNumber}}</td>
+                    <td class="align-middle text-center">{{flight.airplane}}</td>
+                    <td class="align-middle text-center">{{flight.price[0].price}}</td>
+                    <td class="align-middle text-center">{{flight.price[1].price}}</td>
+                    <td class="align-middle text-center">{{flight.price[2].price}}</td>
+                    <td class="align-middle text-center">{{flight.duration}}</td>
+                    <td class="align-middle text-center">{{flight.seatCount}}</td>
+                    <td class="align-middle text-center"><button class="btn btn-outline-info"
+                            (click)="showFlightDetails(flight.flightNumber)">Book</button>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-outline-secondary" (click)="backToSearch()">Back to Search</button>
+    </div>
+</div>
+<div toastContainer></div>

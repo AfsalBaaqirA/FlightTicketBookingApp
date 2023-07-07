@@ -1,0 +1,60 @@
+<app-loading #loading></app-loading>
+<app-navbar [links]="links"></app-navbar>
+
+<div class="bd-masthead mb-3" id="content">
+    <div class="container col-12 d-flex align-items-center justify-content-center app">
+        <h1 class="bd-title">End Your Search for Cheap Flights!</h1>
+        <p class="bd-lead">Book Now and Fly for Less!</p>
+        <a class="btn btn-primary" [routerLink]="'/search-flights'">Search Flights!</a>
+    </div>
+    <a href="#popularDestinations">
+        <div class="arrow bounce">
+            <i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i>
+        </div>
+    </a>
+</div>
+
+<div class="container col-10">
+    <h3 class="d-flex justify-content-center align-items-center">Popular Destinations</h3>
+    <div id="popularDestinations" class="custom-card-container">
+        <div class="card text-white p-0" *ngFor="let destination of popularDestinations">
+            <img [src]="'assets/img/' + destination.imgSrc" style="height: 100%; width: 100%;" class="card-img"
+                alt="card-image">
+            <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                <h5 class="card-title" style="font-size: 2rem;">{{ destination.name }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="bg-dark mt-5 py-5">
+    <div class="container col-10">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center text-white">
+                <h2>User Reviews</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mt-5" *ngFor="let review of reviews">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <p class="card-text">&ldquo;{{ review.quote }}&rdquo;</p>
+                            <img [src]="review.image" alt="" class="rounded-circle mb-3"
+                                style="width: 150px; height: 150px; object-fit: cover;">
+                            <h5 class="mb-0">{{ review.name }}</h5>
+                            <p class="text-muted">{{ review.role }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="container d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <p class="col-md-4 mb-0 text-body-secondary">&copy; {{year}} Afsal Baaqir A</p>
+    <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Terms</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Privacy</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Contact</a></li>
+    </ul>
+</footer>

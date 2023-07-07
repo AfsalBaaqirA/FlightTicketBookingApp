@@ -1,0 +1,181 @@
+<app-navbar [links]="links"></app-navbar>
+<div class="container mt-5" *ngIf="!showFlights">
+    <h1 class="mb-4">Flight Details</h1>
+    <form class="mt-5">
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="flightNumber" placeholder="Flight Number"
+                        [(ngModel)]="newFlight.flightNumber" name="flightNumber">
+                    <label for="flightNumber">Flight Number</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="date" class="form-control" id="date" [(ngModel)]="newFlight.date" name="date">
+                    <label for="date">Date</label>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="time" placeholder="Time" [(ngModel)]="newFlight.time"
+                        name="time">
+                    <label for="time">Time</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <select class="form-select" id="floatingFrom" [(ngModel)]="newFlight.from" name="from">
+                        <option value="" disabled>Select an airport</option>
+                        <option *ngFor="let airport of airports" [value]="airport">{{ airport }}</option>
+                    </select>
+                    <label for="floatingFrom">From</label>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <select class="form-select" id="floatingTo" [(ngModel)]="newFlight.to" name="to">
+                        <option value="" disabled>Select an airport</option>
+                        <option *ngFor="let airport of airports" [value]="airport">{{ airport }}</option>
+                    </select>
+                    <label for="floatingFrom">To</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="duration" placeholder="Duration"
+                        [(ngModel)]="newFlight.duration" name="duration">
+                    <label for="duration">Duration</label>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="airplane" placeholder="Airplane"
+                        [(ngModel)]="newFlight.airplane" name="airplane">
+                    <label for="airplane">Airplane</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="gate" placeholder="Gate" [(ngModel)]="newFlight.gate"
+                        name="gate">
+                    <label for="gate">Gate</label>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="terminal" placeholder="Terminal"
+                        [(ngModel)]="newFlight.terminal" name="terminal">
+                    <label for="terminal">Terminal</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="economyPrice" placeholder="Economy Price"
+                        [(ngModel)]="newFlight.price[0].price" name="economyPrice">
+                    <label for="economyPrice">Economy Price</label>
+                </div>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="businessPrice" placeholder="Business Price"
+                        [(ngModel)]="newFlight.price[1].price" name="businessPrice">
+                    <label for="economyPrice">Business Price</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="firstClassPrice" placeholder="First Class Price"
+                        [(ngModel)]="newFlight.price[2].price" name="firstClassPrice">
+                    <label for="economyPrice">First Class Price</label>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center mx-1">
+            <button class="btn btn-primary md-4 my-3" (click)="addFlight()">Add Flight</button>
+            <button class="btn btn-primary md-4 my-3" (click)="showFlights = true">Show Flights</button>
+        </div>
+    </form>
+</div>
+
+<div class="table-container d-flex flex-column justify-content-center mt-5" *ngIf="showFlights">
+    <table class="table table-hover mt-5">
+        <caption class="text-center">Available Flights</caption>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Flight Number</th>
+                <th class="text-center">Flight Name</th>
+                <th class="text-center">Economy</th>
+                <th class="text-center">Business</th>
+                <th class="text-center">First Class</th>
+                <th class="text-center">Duration</th>
+                <th class="text-center">Available Seats</th>
+                <th class="text-center">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tbody class="table-group-divider">
+            <tr *ngFor="let flight of flights; let i = index">
+                <td class="align-middle text-center">{{i + 1}}</td>
+                <td class="align-middle text-center">{{flight.flightNumber}}</td>
+                <td class="align-middle text-center">{{flight.airplane}}</td>
+                <td class="align-middle text-center">{{flight.price[0].price}}</td>
+                <td class="align-middle text-center">{{flight.price[1].price}}</td>
+                <td class="align-middle text-center">{{flight.price[2].price}}</td>
+                <td class="align-middle text-center">{{flight.duration}}</td>
+                <td class="align-middle text-center">{{flight.seatCount}}</td>
+                <td class="align-middle text-center"><button class="btn btn-outline-info"
+                        (click)="removeFlight(flight.flightNumber)">Remove</button>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-outline-secondary" (click)="showFlights = false">Add Flight</button>
+    <div>
+        <h1 class="text-center">Sample Flight Data</h1>
+        <div class="d-flex justify-content-center align-items-center" *ngIf="showFlights">
+            <div class="card text-center">
+                <div class="card-header d-flex justify-content-between">
+                    <p class="mb-0">{{flights[0].flightNumber}}</p>
+                </div>
+                <div class="card-body text-start">
+                    <p class="card-text"><b>From: </b>{{flights[0].from}}</p>
+                    <p class="card-text"><b>To: </b>{{flights[0].to}}</p>
+                    <p class="card-text"><b>Departure: </b>{{flights[0].date}}</p>
+                    <p class="card-text"><b>Arrival: </b>{{flights[0].duration}}</p>
+                    <p class="card-text"><b>Gate: </b>{{flights[0].gate}}</p>
+                    <p class="card-text"><b>Terminal: </b>{{flights[0].terminal}}</p>
+                    <p class="card-text"><b>Seat Available: </b>{{flights[0].seatCount}}</p>
+                    <div class="card-text"><b>Passengers: </b>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Passenger Name</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">DOB</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer text-muted d-flex justify-content-between">
+                    <p class="mb-0">{{flights[0].date}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div toastContainer></div>
+```

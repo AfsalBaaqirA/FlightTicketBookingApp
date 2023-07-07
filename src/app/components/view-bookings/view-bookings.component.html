@@ -1,0 +1,76 @@
+<app-navbar [links]="links"></app-navbar>
+<div class="table-container d-flex flex-column justify-content-center mt-5" *ngIf="!showTicket">
+    <table class="table table-hover mt-5">
+        <caption class="text-center">Ticket Details</caption>
+        <thead>
+            <tr>
+                <th class="text-center">Ticket Number</th>
+                <th class="text-center">Flight Number</th>
+                <th class="text-center">From</th>
+                <th class="text-center">To</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">TIme</th>
+                <th class="text-center"># Passengers</th>
+                <th class="text-center">Ticket Price</th>
+                <th class="text-center">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tbody class="table-group-divider">
+            <tr *ngFor="let ticket of ticketList; let i = index">
+                <td class="align-middle text-center">{{ticket.ticketNumber}}</td>
+                <td class="align-middle text-center">{{ticket.flightNumber}}</td>
+                <td class="align-middle text-center">{{ticket.from}}</td>
+                <td class="align-middle text-center">{{ticket.to}}</td>
+                <td class="align-middle text-center">{{ticket.date}}</td>
+                <td class="align-middle text-center">{{ticket.time}}</td>
+                <td class="align-middle text-center">{{ticket.passengers.length}}</td>
+                <td class="align-middle text-center">{{ticket.ticketPrice}}</td>
+                <td class="align-middle text-center">
+                    <button class="btn btn-outline-info" (click)="showTicketDetails(ticket.ticketNumber)">View</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-outline-danger" (click)="cancelTicket(ticket.ticketNumber)">Cancel</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center align-items-center">
+        <button class="btn btn-outline-info" [routerLink]='"/search-flights"'>Book Ticket</button>
+    </div>
+</div>
+<div class="d-flex justify-content-center align-items-center vh-100" *ngIf="showTicket">
+    <div class="card text-center">
+        <div class="card-header d-flex justify-content-between">
+            <p class="mb-0">{{ticket.ticketNumber}}</p>
+            <div>
+                <button class="btn btn-outline-info" (click)="showTicket = false">Back</button>
+            </div>
+        </div>
+        <div class="card-body text-start">
+            <p class="card-text"><b>From: </b>{{ticket.from}}</p>
+            <p class="card-text"><b>To: </b>{{ticket.to}}</p>
+            <div class="card-text"><b>Passengers: </b>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Passenger Name</th>
+                            <th class="text-center">Email</th>
+                            <th class="text-center">DOB</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr *ngFor="let passenger of ticket.passengers; let i = index">
+                            <td class="align-middle text-center">{{passenger.name}}</td>
+                            <td class="align-middle text-center">{{passenger.email}}</td>
+                            <td class="align-middle text-center">{{passenger.dob}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-muted d-flex justify-content-between">
+            <p class="mb-0">{{ticket.date}}</p>
+            <p class="mb-0">Amount: {{ticket.ticketPrice}}</p>
+        </div>
+    </div>
+</div>
