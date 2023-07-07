@@ -32,9 +32,13 @@ export class BookFlightComponent implements OnInit {
   ngOnInit(): void {
     this.flightNumber = this.route.snapshot.paramMap.get('flightNumber');
     this.flightService.getFlightInfo(this.flightNumber!).subscribe((data: any) => {
+      console.log(data);
       this.flightDetails = data.response.flight;
-      this.maxPassengerCount = Math.min(this.flightDetails.seatCount, this.maxPassengerCount);
-      this.generatePassengers();
+      console.log(this.flightDetails);
+      if (this.flightDetails) {
+        this.maxPassengerCount = Math.min(this.flightDetails.seatCount, this.maxPassengerCount);
+        this.generatePassengers();
+      }
     });
   }
 
@@ -93,14 +97,17 @@ export class BookFlightComponent implements OnInit {
   }
 
   calculateTicketPrice() {
-    const prices = this.flightDetails.price;
-    prices.forEach((price) => {
-      if (this.classType == price.priceType){
-        this.ticketPrice = price.price * this.passengerCount;
-        return;
-      }
-    });
+    if (this.flightDetails && this.classType) {
+      const prices = this.flightDetails.price;
+      prices.forEach((price) => {
+        if (this.classType == price.priceType){
+          this.ticketPrice = price.price * this.passengerCount;
+          return;
+        }
+      });
+    }
   }
+  
 
   showToastr(title: string, type: string) {
     switch (type) {

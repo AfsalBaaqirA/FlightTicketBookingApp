@@ -16,7 +16,7 @@ export class FlightService {
   }
 
   getFlightInfo(flightNumber: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${flightNumber}`);
+    return this.http.get(`https://flightticketbookingserver.onrender.com/api/flight/${flightNumber}`);
   }
 
   getFlights(): Observable<any> {
