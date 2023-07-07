@@ -7,7 +7,7 @@ import { Passenger } from '../models/booking';
   providedIn: 'root'
 })
 export class BookingService {
-  private apiUrl = 'http://127.0.0.1:5000/api/flight';
+  private apiUrl = 'https://flightticketbookingserver.onrender.com/api/flight';
 
   constructor(private http: HttpClient) { }
 
