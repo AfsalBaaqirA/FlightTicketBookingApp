@@ -7,7 +7,7 @@ import { Passenger } from '../models/booking';
   providedIn: 'root'
 })
 export class BookingService {
-  private apiUrl = 'http://192.168.1.96:5000/api/flight';
+  private apiUrl = 'http://127.0.0.1:5000/api/flight';
 
   constructor(private http: HttpClient) { }
 

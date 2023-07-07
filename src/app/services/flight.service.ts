@@ -7,7 +7,7 @@ import { Flight, FlightSearch } from '../models/flight';
   providedIn: 'root'
 })
 export class FlightService {
-  private apiUrl = 'http://192.168.1.96:5000/api/flights';
+  private apiUrl = 'http://127.0.0.1:5000/api/flights';
 
   constructor(private http: HttpClient) { }
 
